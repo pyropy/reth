@@ -4,9 +4,8 @@ use clap::Parser;
 use eyre::WrapErr;
 use reth_db::{
     database::Database,
-    mdbx::{Env, WriteMap},
     table::{DupSort, Table},
-    DatabaseEnvRO, TableType, TableViewer, Tables,
+    DatabaseEnvRO, TableViewer, Tables,
 };
 use std::cell::RefCell;
 use tracing::error;
@@ -45,11 +44,7 @@ pub struct Command {
 impl Command {
     /// Execute `db list` command
     pub fn execute(self, tool: &DbTool<'_, DatabaseEnvRO>) -> eyre::Result<()> {
-        if self.table.table_type() == TableType::DupSort {
-            self.table.view_dupsort(&ListTableViewer { tool, args: &self })?;
-        } else {
-            self.table.view(&ListTableViewer { tool, args: &self })?;
-        }
+        self.table.view(&ListTableViewer { tool, args: &self })?;
 
         Ok(())
     }
