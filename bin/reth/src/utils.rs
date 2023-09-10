@@ -130,7 +130,7 @@ impl<'a, DB: Database> DbTool<'a, DB> {
                 if let Ok((k, v)) = row {
                     let result = || {
                         if filter.only_count {
-                            return None;
+                            return None
                         }
                         Some((k.key().unwrap(), v.value().unwrap()))
                     };
@@ -140,12 +140,12 @@ impl<'a, DB: Database> DbTool<'a, DB> {
                                 || searcher.find_first_in(k.raw_key()).is_some()
                             {
                                 hits += 1;
-                                return result();
+                                return result()
                             }
                         }
                         None => {
                             hits += 1;
-                            return result();
+                            return result()
                         }
                     }
                 }
